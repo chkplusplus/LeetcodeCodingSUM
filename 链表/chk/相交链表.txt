@@ -1,0 +1,36 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode headAPtr = headA;
+        ListNode headBPtr = headB;
+
+        while (headAPtr != headBPtr) {
+            // 这里注意用headAptr判断是否为null，而不是用headAPtr.next，因为用前者判断的时候，如果链表没有交点
+            // 则两个遍历指针同时走完两条路的时候都是null，仍然可以返回，但是用后者的话，就死循环了
+            if (headAPtr == null) {
+                headAPtr = headB;
+            } else {
+                headAPtr = headAPtr.next;
+            }
+            if (headBPtr == null) {
+                headBPtr = headA;
+            } else {
+                headBPtr = headBPtr.next;
+            }
+        }
+        return headBPtr;
+    }
+}
